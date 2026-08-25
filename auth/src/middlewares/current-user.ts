@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, request } from "express"
+import { Request, Response, NextFunction } from "express"
 import jwt from 'jsonwebtoken';
 
 declare global{
@@ -16,7 +16,6 @@ interface CurrentUser {
 
 export const currentUser = 
 ( req: Request, res: Response, next: NextFunction ) => {
-  
   if(!req.session?.jwt){
     return next();
   }
@@ -24,8 +23,6 @@ export const currentUser =
   try{
     const payload = jwt.verify(req.session?.jwt, process.env.JWT_KEY!) as CurrentUser;
     req.currentUser = payload;
-  } catch(err){
-
-  }
+  } catch {}
   next();
 }

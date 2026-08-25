@@ -2,53 +2,37 @@
 
 import { useState, type SubmitEvent } from 'react'
 import { useRouter } from 'next/navigation'
-
-type ApiError = {
-  message: string
-  field?: string
-}
-
-type ApiErrorResponse = {
-  errors: ApiError[]
-}
+import useRequest from '../../../hooks/use-request';
 
 export default function SignUpPage() {
   const router = useRouter()
   const [pending, setPending] = useState(false)
-
-  const [errors, setErrors] = useState<ApiError[]>([])
+  const { doRequest, errors } = useRequest();
 
   async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault()
-    setErrors([])
     setPending(true)
 
     const formData = new FormData(e.currentTarget)
-    const payload = Object.fromEntries(formData.entries())
+    const payload = {
+      email: String(formData.get('email') ?? ''),
+      password: String(formData.get('password') ?? ''),
+    }
 
     try {
-      const res = await fetch('/api/users/signup', {
-        method: 'POST',
-        credentials: 'include', // важно: без этого браузер не примет/не отправит cookie
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
+      await doRequest({
+        url: '/api/users/signup',
+        method: 'post',
+        body: payload,
+        onSuccess: () => {
+          router.push('/');
+          router.refresh();
+        }
+      });
 
-      if (!res.ok) {
-        const data: ApiErrorResponse | null = await res.json().catch(() => null)
-        setErrors(
-          data?.errors?.length
-            ? data.errors
-            : [{ message: 'Sign up failed. Please try again.' }]
-        )
-        return
-      }
-
-      router.push('/')
-    } catch {
-      setErrors([{ message: 'Connection error. Please check your internet connection.' }])
+      
     } finally {
-      setPending(false)
+      setPending(false);
     }
   }
 
