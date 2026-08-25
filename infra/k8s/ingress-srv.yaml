@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ticketing.test #C:\Windows\System32\drivers\etc - 127.0.0.1 ticketing.test
+      http:
+        paths:
+          - path: /api/users/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: auth-srv
+                port:
+                  number: 4000
+          - path: /?(.*)
+            pathType: ImplementationSpecific
+            backend: 
+              service:
+                name: client-srv
+                port:
+                  number: 3000

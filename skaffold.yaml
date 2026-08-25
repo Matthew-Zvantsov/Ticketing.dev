@@ -1,0 +1,38 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: panmotya/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "src/**/*.ts"
+    - image: panmotya/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: .
+            src: "**/*"
+
+#build:
+  #tagPolicy:
+    #customTemplate:
+      #template: "dev"
+
+#spec:
+  #template:
+    #spec:
+      #containers:
+        #- name: auth
+          #image: panmotya/auth:dev
+          #imagePullPolicy: Always
