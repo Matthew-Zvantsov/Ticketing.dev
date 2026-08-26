@@ -1,14 +1,15 @@
 import "server-only";
-import Link from "next/link";
 import axios from "axios";
 import { serverApiClient } from "../libs/server-api";
 import HeaderComp from "@/components/header";
 
 interface CurrentUserResponse {
-  currentUser: {
-    id: string;
-    email: string;
-  } | null;
+  currentUser: CurrentUser | null;
+}
+
+export interface CurrentUser {
+  id: string;
+  email: string;
 }
 
 async function getCurrentUser(): Promise<CurrentUserResponse> {
@@ -39,14 +40,13 @@ export default async function Home() {
   console.log('currentUser ', currentUser);
 
   return (
-    currentUser ? 
     <div>
-      <h1>You are already signed in</h1>
-    </div>
-    :
-    <div>
-      <HeaderComp></HeaderComp>
-      <h1>You are not signed in</h1>
+      <HeaderComp currentUser={currentUser} />
+      {currentUser ? (
+        <h1>You are already signed in</h1>
+      ) : (
+        <h1>You are not signed in</h1>
+      )}
     </div>
   );
 }
