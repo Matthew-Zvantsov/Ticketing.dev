@@ -2,6 +2,7 @@ import "server-only";
 import Link from "next/link";
 import axios from "axios";
 import { serverApiClient } from "../libs/server-api";
+import HeaderComp from "@/components/header";
 
 interface CurrentUserResponse {
   currentUser: {
@@ -44,9 +45,8 @@ export default async function Home() {
     </div>
     :
     <div>
+      <HeaderComp></HeaderComp>
       <h1>You are not signed in</h1>
-      <Link href="auth/signup">Sign Up!</Link>
-      <Link href="auth/signin">Sign In!</Link>
     </div>
   );
 }
