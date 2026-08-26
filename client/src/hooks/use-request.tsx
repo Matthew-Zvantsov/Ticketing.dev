@@ -6,6 +6,7 @@ interface useRequestInterface{
   url: string,
   method: 'get' | 'post' | 'put' | 'patch' | 'delete',
   body?: Record<string, string>,
+  errorMessage?: string,
   onSuccess?: () => void
 }
 
@@ -22,7 +23,7 @@ export default function useRequest() {
   
   const [errors, setErrors] = useState<ApiError[]>([]);
 
-  const doRequest = async ({url, method, body, onSuccess}: useRequestInterface) => {
+  const doRequest = async ({url, method, body, errorMessage = 'Request failed. Please try again.', onSuccess}: useRequestInterface) => {
     try{
       setErrors([]);
       const response = await apiClient[method](url, body);
@@ -41,7 +42,7 @@ export default function useRequest() {
       setErrors(
         responseErrors?.length
           ? responseErrors
-          : [{ message: 'Sign up failed. Please try again.' }]
+          : [{ message: errorMessage }]
       )
     }
   };

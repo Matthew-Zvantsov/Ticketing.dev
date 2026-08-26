@@ -38,9 +38,15 @@ export default async function Home() {
   console.log('currentUser ', currentUser);
 
   return (
+    currentUser ? 
     <div>
-      <h1>Landing Page</h1>
+      <h1>You are already signed in</h1>
+    </div>
+    :
+    <div>
+      <h1>You are not signed in</h1>
       <Link href="auth/signup">Sign Up!</Link>
+      <Link href="auth/signin">Sign In!</Link>
     </div>
   );
 }
