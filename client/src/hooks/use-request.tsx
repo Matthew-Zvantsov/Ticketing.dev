@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { apiClient } from '../libs/api-client';
 
 interface useRequestInterface{
   url: string,
@@ -24,7 +25,7 @@ export default function useRequest() {
   const doRequest = async ({url, method, body, onSuccess}: useRequestInterface) => {
     try{
       setErrors([]);
-      const response = await axios[method](url, body, { withCredentials: true });
+      const response = await apiClient[method](url, body);
 
       if(onSuccess){
         onSuccess();

@@ -21,7 +21,7 @@ export default function SignUpPage() {
 
     try {
       await doRequest({
-        url: '/api/users/signup',
+        url: '/users/signup',
         method: 'post',
         body: payload,
         onSuccess: () => {

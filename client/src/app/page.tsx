@@ -1,7 +1,7 @@
 import "server-only";
 import Link from "next/link";
 import axios from "axios";
-import { cookies } from "next/headers";
+import { serverApiClient } from "../libs/server-api";
 
 interface CurrentUserResponse {
   currentUser: {
@@ -11,22 +11,10 @@ interface CurrentUserResponse {
 }
 
 async function getCurrentUser(): Promise<CurrentUserResponse> {
-  const cookieStore = await cookies();
-
-  const allCookies = cookieStore.getAll();
-  const cookieHeader = allCookies
-    .map(({ name, value }) => `${name}=${value}`)
-    .join("; ");
-
   try {
-    const response = await axios.get<CurrentUserResponse>(
-      `http://${process.env.INTERNAL_API_URL}/api/users/currentuser`,
-      {
-        headers: {
-          Cookie: cookieHeader,
-          Host: "ticketing.test",
-        },
-      }
+    const client = await serverApiClient();
+    const response = await client.get<CurrentUserResponse>(
+      "/api/users/currentUser"
     );
 
     return response.data;

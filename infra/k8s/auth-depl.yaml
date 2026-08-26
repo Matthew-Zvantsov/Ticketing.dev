@@ -20,6 +20,19 @@ spec:
               secretKeyRef:
                 name: jwt-secret
                 key: JWT_KEY
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 4000
+          initialDelaySeconds: 2
+          periodSeconds: 3
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 4000
+          initialDelaySeconds: 10
+          periodSeconds: 10
 
 ---
 

@@ -16,7 +16,7 @@ spec:
         image: panmotya/client
         env:
           - name: INTERNAL_API_URL
-            value: ingress-nginx-controller.ingress-nginx.svc.cluster.local
+            value: auth-srv:4000 #ingress-nginx-controller.ingress-nginx.svc.cluster.local
 
 ---
 

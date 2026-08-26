@@ -18,6 +18,10 @@ app.use(
     secure: false //process.env.NODE_ENV !== 'test'
 }));
 
+app.get("/health", (_req, res) => {
+  res.sendStatus(200);
+});
+
 app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
