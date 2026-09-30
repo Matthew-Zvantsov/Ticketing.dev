@@ -1,0 +1,7 @@
+{
+  "name": "ticketing",
+  "private": true,
+  "workspaces": [
+    "common"
+  ]
+}

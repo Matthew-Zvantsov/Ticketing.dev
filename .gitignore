@@ -1,5 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+
+node_modules/
+dist/
+*.log
+
+common/package-lock.json
+
+
 # dependencies
 **/node_modules/
 **/.pnp
