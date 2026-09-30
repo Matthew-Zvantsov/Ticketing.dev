@@ -1,6 +1,6 @@
 import express from 'express';
-import {currentUser} from '../middlewares/current-user';
-import {requireAuth} from '../middlewares/require-auth' //No needed for now (get null instead 401)
+import {currentUser} from '@mz_ticketing/common';
+import {requireAuth} from '@mz_ticketing/common' //No needed for now (get null instead 401)
 
 const router = express.Router();
 

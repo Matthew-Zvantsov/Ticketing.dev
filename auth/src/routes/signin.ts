@@ -1,10 +1,10 @@
 import express, {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
 import { body } from 'express-validator';
-import { validationHandler } from '../middlewares/validation-handler'
+import { validationHandler } from '@mz_ticketing/common'
 import { User } from '../models/user-model';
 import { Password } from '../utils/password-util';
-import { BadRequestError } from '../errors/bad-request-error';
+import { BadRequestError } from '@mz_ticketing/common';
 
 const router = express.Router();
 

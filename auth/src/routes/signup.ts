@@ -1,8 +1,8 @@
 import express, {Request, Response} from 'express';
 import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
-import { validationHandler } from '../middlewares/validation-handler'
-import { BadRequestError } from '../errors/bad-request-error';
+import { validationHandler } from '@mz_ticketing/common'
+import { BadRequestError } from '@mz_ticketing/common';
 import { User } from '../models/user-model';
 
 const router = express.Router();
