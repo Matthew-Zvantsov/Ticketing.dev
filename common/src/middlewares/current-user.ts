@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express"
+import "cookie-session";
 import jwt from 'jsonwebtoken';
 
 declare global{
