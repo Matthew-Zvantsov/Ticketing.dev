@@ -1,8 +1,8 @@
 import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
-import { errorHandler } from '@mz_ticketing/common';
-import { NotFoundError } from '@mz_ticketing/common';
+import {errorHandler, NotFoundError, currentUser } from '@mz_ticketing/common';
+import {createTicketsRouter} from './routes/new';
 
 const app = express();
 app.set('trust proxy', true);
@@ -13,6 +13,10 @@ app.use(
     signed: false,
     secure: false //process.env.NODE_ENV !== 'test'
 }));
+
+app.use(currentUser);
+
+app.use(createTicketsRouter);
 
 app.get("/health", (_req, res) => {
   res.sendStatus(200);
