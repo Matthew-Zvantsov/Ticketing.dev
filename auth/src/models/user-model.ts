@@ -7,7 +7,7 @@ interface UserAttrs {
   password: string;
 }
 
-// Что представляет собой документ User (что хранится в БД)
+// Что представляет собой документ (одна запись) User (что хранится в БД)
 interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
